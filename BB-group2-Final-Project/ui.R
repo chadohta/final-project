@@ -3,7 +3,22 @@ library(shiny)
 shinyUI(navbarPage("Sleeping Alone",
 
                     tabPanel("Intro"),
-                    tabPanel("Background"),
+                    tabPanel("Background", fluidPage(
+                      titlePanel("Statistics on the Data"),
+                      sidebarLayout(
+                        sidebarPanel( 
+                          # dataVariable Widget
+                          selectInput('dataVariable', "Variable:",
+                                      list("Years Together" = "CurrentRelationshipLength", 
+                                           "Education" = "Education",
+                                           "Income" = "HouseholdIncome"))
+                          ),
+                        # Main Panel
+                        mainPanel(
+                          plotOutput("backgroundGraph")
+                        )
+                      ))
+                    ),
                     tabPanel("Graph"),
                     tabPanel("Graph"),
                     fluidPage(
