@@ -1,7 +1,6 @@
 library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
-<<<<<<< HEAD
                    tabPanel("Intro", fluidPage(
                               htmlOutput('Intro')
                             )
