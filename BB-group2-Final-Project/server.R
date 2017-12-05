@@ -9,6 +9,9 @@
 
 library(shiny)
 
+sleeping.data <- read.csv('sleeping-alone-data.csv')
+
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
