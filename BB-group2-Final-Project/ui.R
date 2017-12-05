@@ -1,26 +1,36 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ca1b3d3d911fb4499f96628c4add6ab5cbad6c0
 library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
-                   tabPanel("Intro"),
-                   tabPanel("Background"),
-                   tabPanel("Graph"),
-                   tabPanel("Graph"),
-<<<<<<< HEAD
-                   fluidPage(
-                     p("These ")
-                     # helps us stay together graph
-                     # get better sleep graph
-                     # improved sex life graph
-                   ),
-                   tabPanel("Graph"),
-=======
-                   tabPanel("Graph", fluidPage(
-                                      titlePanel("Testing"))),
->>>>>>> 6ca1b3d3d911fb4499f96628c4add6ab5cbad6c0
+                    tabPanel("Intro"),
+                    tabPanel("Background"),
+                    tabPanel("Graph"),
+                    tabPanel("Graph"),
+                    fluidPage(
+                      p("These ")
+                      # helps us stay together graph
+                      # get better sleep graph
+                      # improved sex life graph
+                    ),
+                    tabPanel("Pattern Analyzing" , fluidPage(
+                      titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
+                      sidebarLayout(
+                        sidebarPanel(
+                          # Color Widget
+                          radioButtons('color', "Color by:",
+                                      c("Education" = "",
+                                        "Gender" = "", 
+                                        "Marital Status" = "")),
+                          # Variable Widget
+                          selectInput('variable', "Variable:",
+                                     list("Income" = "", 
+                                          "Age" = "", 
+                                          "Time Together" = ""))
+                          ),
+                        # Main Panel, Render the Graph
+                        mainPanel(
+                          plotOutput("analyticsGraph")
+                        )
+                   ))),
                    tabPanel("Conclusion"),
                    fluidPage(
                      p("insert paragraph here")
