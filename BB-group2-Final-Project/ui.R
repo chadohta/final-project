@@ -9,10 +9,13 @@ shinyUI(navbarPage("Sleeping Alone",
                        following statements:"), 
                      p("- \"Sleeping in separate beds helps us to stay together.\""), 
                      p("- \"We sleep better when we sleep in separate beds.\""), 
-                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\"")
+                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
                      # helps us stay together graph
+                     plotOutput('stayTogetherPie'),
                      # get better sleep graph
+                     plotOutput('betterSleepPie'),
                      # improved sex life graph
+                     plotOutput('improvedSexPie')
                      )
                   ),
                   tabPanel("Graph"),
