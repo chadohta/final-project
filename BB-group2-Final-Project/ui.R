@@ -20,6 +20,14 @@ shinyUI(navbarPage("Sleeping Alone",
                      titlePanel("Testing"))),
                   tabPanel("Intro"),
                     tabPanel("Background"),
+                   tabPanel("Intro", fluidPage(
+                              htmlOutput('Intro')
+                            )
+                   ),
+                   tabPanel("Background",
+                            titlePanel("Background Information"),
+                            mainPanel()
+                   ),
                     tabPanel("Graph"),
                     tabPanel("Graph"),
                     fluidPage(
@@ -35,12 +43,12 @@ shinyUI(navbarPage("Sleeping Alone",
                           # Color Widget
                           radioButtons('color', "Color by:",
                                       c("Education" = "",
-                                        "Gender" = "", 
+                                        "Gender" = "",
                                         "Marital Status" = "")),
                           # Variable Widget
                           selectInput('variable', "Variable:",
-                                     list("Income" = "", 
-                                          "Age" = "", 
+                                     list("Income" = "",
+                                          "Age" = "",
                                           "Time Together" = ""))
                           ),
                         # Main Panel, Render the Graph
