@@ -11,16 +11,15 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(navbarPage("Sleeping Alone",
-                   tabPanel("Intro"),
+                   tabPanel("Intro", fluidPage(
+                              htmlOutput('Intro')
+                            )
+                   ),
                    tabPanel("Background", 
-                            titlePanel("Background Information")),
-                   tabPanel("Graph"),
-                   fluidPage(
-                     
+                            titlePanel("Background Information"),
+                            mainPanel()
                    ),
                    tabPanel("Graph"),
-                   tabPanel("Conclusion"),
-                   fluidPage(
-                     p("insert paragraph here")
-                   )
+                   tabPanel("Graph"),
+                   tabPanel("Conclusion")
 ))
