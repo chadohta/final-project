@@ -15,6 +15,12 @@ shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Background", 
                             titlePanel("Background Information")),
                    tabPanel("Graph"),
+                   fluidPage(
+                     
+                   ),
                    tabPanel("Graph"),
-                   tabPanel("Conclusion")
+                   tabPanel("Conclusion"),
+                   fluidPage(
+                     p("insert paragraph here")
+                   )
 ))
