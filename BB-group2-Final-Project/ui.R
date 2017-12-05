@@ -12,8 +12,8 @@ library(shiny)
 # Define UI for application that draws a histogram
 shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Intro"),
-                   tabPanel("Background"),
-                   tabPanel("Graph"),
+                   tabPanel("Background", 
+                            titlePanel("Background Information")),
                    tabPanel("Graph"),
                    fluidPage(
                      # helps us stay together graph
