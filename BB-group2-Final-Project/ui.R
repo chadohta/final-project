@@ -16,7 +16,9 @@ shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Graph"),
                    tabPanel("Graph"),
                    fluidPage(
-                     
+                     # helps us stay together graph
+                     # get better sleep graph
+                     # improved sex life graph
                    ),
                    tabPanel("Graph"),
                    tabPanel("Conclusion"),
