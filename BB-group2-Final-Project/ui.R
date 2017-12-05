@@ -9,5 +9,8 @@ shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Graph"),
                    tabPanel("Graph", fluidPage(
                                       titlePanel("Testing"))),
-                   tabPanel("Conclusion")
+                   tabPanel("Conclusion"),
+                   fluidPage(
+                     p("insert paragraph here")
+                   )
 ))
