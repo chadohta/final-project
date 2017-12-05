@@ -1,6 +1,7 @@
 library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
+
                     tabPanel("Intro"),
                     tabPanel("Background"),
                     tabPanel("Graph"),
@@ -31,8 +32,7 @@ shinyUI(navbarPage("Sleeping Alone",
                           plotOutput("analyticsGraph")
                         )
                    ))),
-                   tabPanel("Conclusion"),
-                   fluidPage(
-                     p("insert paragraph here")
-                   )
+                   tabPanel("Conclusion", fluidPage( #mine
+                     #conclusion statements here
+                   ))
 ))
