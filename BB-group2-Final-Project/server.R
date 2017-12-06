@@ -10,11 +10,7 @@ colnames(sleeping.data) <- c("StartDate", "EndDate", "RelationshipStatus", "Curr
                              "WhereDoYouSleep", "Other1", "WherePartnerSleeps", "Other2", "Reasons", "R1", "R2", "R3", "R4", "R5",
                              "R6", "R7", "R8", "R9", "R10", "FirstTimeSleepingSep", "SepHelpsUsStayTogether", "SepHelpsMeSleepBetter",
                              "SepImprovesSexLife", "Occupation", "O1", "Gender", "Age", "HouseholdIncome", "Education", "Location")
-
 sleeping.data <- sleeping.data[-(1), ] # Remove header row with ("Response")
-
-sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
-sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
 
 
 shinyServer(function(input, output) {
@@ -48,10 +44,19 @@ shinyServer(function(input, output) {
   output$improvedSexPie <- pie(improvedSexSlices, labels = pieLables, main = "\"Our sex life has improved as a result of sleeping in
                                separate beds.\"")
   
+  # DataFrame alterations for Background Graph
+  sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
+  sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
+  
   # Plotting code for background information graph
   output$backgroundGraph <- renderPlot({
     ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$dataVariable, fill = input$dataVariable)) +
       ggtitle("Testing") + labs(x = "Variable", y = "Count") + coord_flip()
+  })
+  
+  output$backgroundPie <- renderPlot({
+    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$ageOrGender, fill = input$ageOrGender))+
+      coord_polar("y") + ggtitle("Test Pie")
   })
   
 })

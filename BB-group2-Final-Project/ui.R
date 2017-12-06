@@ -2,14 +2,6 @@ library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Intro", fluidPage(
-                              htmlOutput('Intro')
-                            )
-                   ),
-                   tabPanel("Background",
-                            titlePanel("Background Information"),
-                            mainPanel()
-                   ),
-                   tabPanel("Intro", fluidPage(
                      htmlOutput('Intro')
                    )),
                     tabPanel("Background", fluidPage(
@@ -20,7 +12,11 @@ shinyUI(navbarPage("Sleeping Alone",
                           selectInput('dataVariable', "Variable:",
                                       list("Years Together" = "CurrentRelationshipLength",
                                            "Education" = "Education",
-                                           "Income" = "HouseholdIncome"))
+                                           "Income" = "HouseholdIncome")),
+                          # Age or Gender Widget
+                          selectInput('ageOrGender', "Variable:",                   #we can change these variable names! 
+                                      list("Gender" = "Gender", 
+                                           "Age" = "Age"))
                           ),
                         # Main Panel
                         mainPanel(
