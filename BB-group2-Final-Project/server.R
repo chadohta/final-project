@@ -17,9 +17,7 @@ sleeping.data <- sleeping.data[-(1), ] # Remove header row with ("Response")
 shinyServer(function(input, output) {
   
   # --------------------------------------------Introduction-----------------------------------------------------------------
-  output$Intro <- renderText({  
-    intro <- readLines("bb-group2-Final-Project/Intro.html")
-  })
+  
   
   # --------------------------------------------Background Information-------------------------------------------------------
   # DataFrame alterations for Background Graph
@@ -77,6 +75,7 @@ shinyServer(function(input, output) {
       blank_theme +
       scale_fill_manual(values=c("#CCCCCC", "#FF9999", "#33CCFF", "#3399CC", "#33CCCC"))
   })
+  # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
   
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
@@ -88,8 +87,10 @@ shinyServer(function(input, output) {
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Neither agree nor disagree")),
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Somewhat agree")),
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Strongly agree")))
+  stayTogetherPct <- round(stayTogetherSlices/sum(stayTogetherSlices)*100)
+  stayTogetherLabels <- paste0(pieLabels, " ", stayTogetherPct, "%")
   output$stayTogetherPie <- renderPlot({
-    pie(stayTogetherSlices, labels = pieLabels, main = "\"Sleeping in separate beds helps us to stay together.\"")
+    pie(stayTogetherSlices, labels = stayTogetherLabels, main = "\"Sleeping in separate beds helps us to stay together.\"")
   })
   
   betterSleepSlices <- c(nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly disagree")),
@@ -97,8 +98,10 @@ shinyServer(function(input, output) {
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Neither agree nor disagree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Somewhat agree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly agree")))
+  betterSleepPct <- round(betterSleepSlices/sum(betterSleepSlices)*100)
+  betterSleepLabels <- paste0(pieLabels, " ", betterSleepPct, "%")
   output$betterSleepPie <- renderPlot({
-    pie(betterSleepSlices, labels = pieLabels, main = "\"We sleep better when we sleep in separate beds.\"")
+    pie(betterSleepSlices, labels = betterSleepLabels, main = "\"We sleep better when we sleep in separate beds.\"")
   })
   
   improvedSexSlices <- c(nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly disagree")),
@@ -106,10 +109,14 @@ shinyServer(function(input, output) {
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Neither agree nor disagree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Somewhat agree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly agree")))
+  improvedSexPct <- round(improvedSexSlices/sum(improvedSexSlices)*100)
+  improvedSexLabels <- paste0(pieLabels, " ", improvedSexPct, "%")
   output$improvedSexPie <- renderPlot({
-    pie(improvedSexSlices, labels = pieLabels, main = "\"Our sex life has improved as a result of sleeping in separate beds.\"")
+    pie(improvedSexSlices, labels = improvedSexLabels, main = "\"Our sex life has improved as a result of sleeping in separate beds.\"")
   })
   
   # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
+  
+  # --------------------------------------------Conclusion-----------------------------------------------------------------
   
 })
