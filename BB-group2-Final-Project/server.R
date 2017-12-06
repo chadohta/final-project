@@ -95,59 +95,30 @@ shinyServer(function(input, output) {
   })
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
-  # Pie chart 1
   sleeping.data$SepHelpsUsStayTogether <- factor(sleeping.data$SepHelpsUsStayTogether,
          levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
-  output$stayTogetherPie <- renderPlot({
+  sleeping.data$SepHelpsMeSleepBetter <- factor(sleeping.data$SepHelpsMeSleepBetter,
+         levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
+  sleeping.data$SepImprovesSexLife <- factor(sleeping.data$SepImprovesSexLife,
+         levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
+
+  output$graph2Pie <- renderPlot({
+    if (input$graph2Input == "SepHelpsUsStayTogether") {
+      pieChartTitle <- "\"Sleeping in separate beds helps us to stay together.\""
+    } else if (input$graph2Input == "SepHelpsMeSleepBetter") {
+      pieChartTitle <- "\"We sleep better when we sleep in separate beds.\""
+    } else if (input$graph2Input == "SepImprovesSexLife") {
+      pieChartTitle <- "\"Our sex life has improved as a result of sleeping in separate beds.\""
+    }
     ggplot(
-      data = filter(sleeping.data, SepHelpsUsStayTogether != ""),
-      aes_string(x = factor("SepHelpsUsStayTogether"), fill = "SepHelpsUsStayTogether")) +
+      data = filter(sleeping.data, eval(as.name(input$graph2Input)) != ""),
+      aes_string(x = factor(input$graph2Input), fill = input$graph2Input)) +
       geom_bar(width = 1) +
-      ggtitle("\"Sleeping in separate beds helps us to stay together.\"") + 
+      ggtitle(pieChartTitle) + 
       coord_polar("y") + 
       scale_fill_brewer(palette="Blues") +
       theme_minimal() + 
       theme(
-        axis.title = element_blank(),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        axis.ticks = element_blank(),
-        legend.title = element_blank(),
-        axis.text = element_blank())
-  })
-  
-  #Pie chart 2
-  sleeping.data$SepHelpsMeSleepBetter <- factor(sleeping.data$SepHelpsMeSleepBetter,
-        levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
-  output$betterSleepPie <- renderPlot({
-    ggplot(
-      data = filter(sleeping.data, SepHelpsMeSleepBetter != ""),
-      aes_string(x = factor("SepHelpsMeSleepBetter"), fill = "SepHelpsMeSleepBetter")) +
-      geom_bar(width = 1) +
-      ggtitle("\"We sleep better when we sleep in separate beds.\"") + 
-      coord_polar("y") + 
-      scale_fill_brewer(palette="Blues") +
-      theme_minimal() + theme(
-        axis.title = element_blank(),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        axis.ticks = element_blank(),
-        legend.title = element_blank(),
-        axis.text = element_blank())
-  })
-  
-  #Pie chart 3
-  sleeping.data$SepImprovesSexLife <- factor(sleeping.data$SepImprovesSexLife,
-        levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
-  output$improvedSexPie <- renderPlot({
-    ggplot(
-      data = filter(sleeping.data, SepImprovesSexLife != ""),
-      aes_string(x = factor("SepImprovesSexLife"), fill = "SepImprovesSexLife")) +
-      geom_bar(width = 1) +
-      ggtitle("\"Our sex life has improved as a result of sleeping in separate beds.\"") + 
-      coord_polar("y") + 
-      scale_fill_brewer(palette="Blues") +
-      theme_minimal() + theme(
         axis.title = element_blank(),
         panel.border = element_blank(),
         panel.grid = element_blank(),
