@@ -24,16 +24,14 @@ shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Graph"),
                    tabPanel("Graph", fluidPage( #mine
                      titlePanel("Participant Opinions on Sleeping Separately"),
-                     h5("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
+                     p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
                      p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
-                     # helps us stay together graph
+                     # pie charts
                      plotOutput('stayTogetherPie'),
-                     # get better sleep graph
                      plotOutput('betterSleepPie'),
-                     # improved sex life graph
                      plotOutput('improvedSexPie')
                      )
                   ),
