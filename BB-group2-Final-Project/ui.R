@@ -1,10 +1,13 @@
 library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
+# --------------------------------------------Introduction-----------------------------------------------------------------
                    
                    tabPanel("Intro", fluidPage(
                      includeMarkdown("Intro.Rmd")
                    )),
+# --------------------------------------------Background Information-------------------------------------------------------
+
                     tabPanel("Background", fluidPage(
                       titlePanel("Statistics on the Data"),
                       sidebarLayout(
@@ -25,11 +28,15 @@ shinyUI(navbarPage("Sleeping Alone",
                         )
                       ))
                     ),
+# --------------------------------------------Graph Tab 1-----------------------------------------------------------------
+
                    tabPanel("Graph", fluidPage(
                      titlePanel("Sleep Trends")
 
                     )
                    ),
+# --------------------------------------------Graph Tab 2-----------------------------------------------------------------
+
                    tabPanel("Graph", fluidPage( #mine
                      titlePanel("Participant Opinions on Sleeping Separately"),
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
@@ -43,6 +50,8 @@ shinyUI(navbarPage("Sleeping Alone",
                      plotOutput('improvedSexPie')
                      )
                   ),
+# --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
+
                   tabPanel("Pattern Analyzation" , fluidPage(
                     titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
                       sidebarLayout(
@@ -63,6 +72,8 @@ shinyUI(navbarPage("Sleeping Alone",
                           plotOutput("analyticsGraph")
                         )
                    ))),
+# --------------------------------------------Conclusion-----------------------------------------------------------------
+
                    tabPanel("Conclusion", fluidPage( #mine
                      #conclusion statements here
                    ))
