@@ -2,7 +2,7 @@ library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
                    
-                   tabPanel("Intro", fluidPage(
+                   tabPanel("Introduction", fluidPage(
                      htmlOutput('Intro')
                    )),
                     tabPanel("Background", fluidPage(
@@ -37,7 +37,7 @@ shinyUI(navbarPage("Sleeping Alone",
                      plotOutput('improvedSexPie')
                      )
                   ),
-                  tabPanel("Pattern Analyzing" , fluidPage(
+                  tabPanel("Pattern Analyzation" , fluidPage(
                     titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
                       sidebarLayout(
                         sidebarPanel(

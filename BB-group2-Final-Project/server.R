@@ -19,10 +19,13 @@ sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength 
 
 shinyServer(function(input, output) {
   
+  # --------------------------------------------Introduction-----------------------------------------------------------------
   output$Intro <- renderText({  
     intro <- readLines("bb-group2-Final-Project/Intro.html")
   })
   
+  # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
+  # Plotting code for graph 2 tab pie charts
   pieLabels <- c("Strongly disagree", "Somewhat disagree", "Neighter agree nor disagree", "Somewhat agree", "Strongly agree")
   
   stayTogetherSlices <- c(nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Strongly disagree")),
@@ -30,24 +33,29 @@ shinyServer(function(input, output) {
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Neither agree nor disagree")),
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Somewhat agree")),
                           nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Strongly agree")))
-  output$stayTogetherPie <- pie(stayTogetherSlices, labels = pieLabels, main = "\"Sleeping in separate beds helps us to stay
-                                together.\"")
+  output$stayTogetherPie <- renderPlot({
+    pie(stayTogetherSlices, labels = pieLabels, main = "\"Sleeping in separate beds helps us to stay together.\"")
+  })
   
   betterSleepSlices <- c(nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly disagree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Somewhat disagree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Neither agree nor disagree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Somewhat agree")),
                          nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly agree")))
-  output$betterSleepPie <- pie(betterSleepSlices, labels = pieLabels, main = "\"We sleep better when we sleep in separate beds.\"")
+  output$betterSleepPie <- renderPlot({
+    pie(betterSleepSlices, labels = pieLabels, main = "\"We sleep better when we sleep in separate beds.\"")
+  })
   
   improvedSexSlices <- c(nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly disagree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Somewhat disagree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Neither agree nor disagree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Somewhat agree")),
                          nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly agree")))
-  output$improvedSexPie <- pie(improvedSexSlices, labels = pieLables, main = "\"Our sex life has improved as a result of sleeping in
-                               separate beds.\"")
+  output$improvedSexPie <- renderPlot({
+    pie(improvedSexSlices, labels = pieLabels, main = "\"Our sex life has improved as a result of sleeping in separate beds.\"")
+  })
   
+  # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
   # Plotting code for background information graph
   output$backgroundGraph <- renderPlot({
     ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$dataVariable, fill = input$dataVariable)) +
