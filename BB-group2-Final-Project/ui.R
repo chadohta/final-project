@@ -9,22 +9,23 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Background Information-------------------------------------------------------
 
                     tabPanel("Background", fluidPage(
-                      titlePanel("Statistics on the Data"),
+                      titlePanel("Data Statistics"),
                       sidebarLayout(
                         sidebarPanel(
                           # dataVariable Widget
-                          selectInput('dataVariable', "Variable:",
+                          selectInput('dataVariable', "Histogram Variable:",
                                       list("Years Together" = "CurrentRelationshipLength",
                                            "Education" = "Education",
                                            "Income" = "HouseholdIncome")),
                           # Age or Gender Widget
-                          selectInput('ageOrGender', "Variable:",                   #we can change these variable names!
+                          selectInput('ageOrGender', "Pie Chart Variable:",
                                       list("Gender" = "Gender",
                                            "Age" = "Age"))
                           ),
                         # Main Panel
                         mainPanel(
-                          plotOutput("backgroundGraph")
+                          plotOutput("backgroundGraph"),
+                          plotOutput("backgroundPie")
                         )
                       ))
                     ),
@@ -37,35 +38,33 @@ shinyUI(navbarPage("Sleeping Alone",
                    ),
 # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
 
-                   tabPanel("Graph", fluidPage( #mine
+                   tabPanel("Graph", fluidPage(
                      titlePanel("Participant Opinions on Sleeping Separately"),
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
-                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
-                     # pie charts
-                     plotOutput('stayTogetherPie'),
-                     plotOutput('betterSleepPie'),
-                     plotOutput('improvedSexPie')
-                     )
-                  ),
+                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\"")
+                  ), fluidRow(
+                    # pie charts
+                    column(width = 4, plotOutput('stayTogetherPie')),
+                    column(width = 4, plotOutput('betterSleepPie')),
+                    column(width = 4, plotOutput('improvedSexPie'))
+                  )),
 # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
 
                   tabPanel("Pattern Analyzation" , fluidPage(
-                    titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
+                    titlePanel("How Different Variables Potentially Affect Frequency of Sleeping Alone"),
                       sidebarLayout(
                         sidebarPanel(
-                          # Color Widget
-                          radioButtons('color', "Color by:",
-                                      c("Education" = "",
-                                        "Gender" = "",
-                                        "Marital Status" = "")),
                           # Variable Widget
-                          selectInput('variable', "Variable:",
-                                     list("Income" = "",
-                                          "Age" = "",
-                                          "Time Together" = ""))
+                          selectInput('analyticsVariable', "Variable:",
+                                     list("Income" = "HouseholdIncome",
+                                          "Age" = "Age",
+                                          "Education" = "Education",
+                                          "Gender" = "Gender",
+                                          "Relationship Status" = "RelationshipStatus",
+                                          "Time Together" = "CurrentRelationshipLength"))
                           ),
                         # Main Panel, Render the Graph
                         mainPanel(
@@ -74,7 +73,7 @@ shinyUI(navbarPage("Sleeping Alone",
                    ))),
 # --------------------------------------------Conclusion-----------------------------------------------------------------
 
-                   tabPanel("Conclusion", fluidPage( #mine
+                   tabPanel("Conclusion", fluidPage(
                      #conclusion statements here
                    ))
 ))
