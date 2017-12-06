@@ -30,19 +30,19 @@ shinyUI(navbarPage("Sleeping Alone",
 
                     )
                    ),
-                   tabPanel("Graph", fluidPage( #mine
+                   tabPanel("Graph", fluidPage(
                      titlePanel("Participant Opinions on Sleeping Separately"),
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
-                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
-                     # pie charts
-                     plotOutput('stayTogetherPie'),
-                     plotOutput('betterSleepPie'),
-                     plotOutput('improvedSexPie')
-                     )
-                  ),
+                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\"")
+                  ), fluidRow(
+                    # pie charts
+                    column(width = 4, plotOutput('stayTogetherPie')),
+                    column(width = 4, plotOutput('betterSleepPie')),
+                    column(width = 4, plotOutput('improvedSexPie'))
+                  )),
                   tabPanel("Pattern Analyzation" , fluidPage(
                     titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
                       sidebarLayout(
@@ -63,7 +63,7 @@ shinyUI(navbarPage("Sleeping Alone",
                           plotOutput("analyticsGraph")
                         )
                    ))),
-                   tabPanel("Conclusion", fluidPage( #mine
+                   tabPanel("Conclusion", fluidPage(
                      #conclusion statements here
                    ))
 ))
