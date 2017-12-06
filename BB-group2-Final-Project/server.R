@@ -81,11 +81,6 @@ shinyServer(function(input, output) {
   })
   # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
   
-  sleeping.data.stacked <- select(sleeping.data, Reasons, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
-  sleeping.data.stacked <- stack(sleeping.data.stacked)
-  sleeping.data.stacked <- select(sleeping.data.stacked, values)
-  sleeping.data.stacked <- filter(sleeping.data.stacked, values != "")
-  
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
   # Plotting code for graph 2 tab pie charts
