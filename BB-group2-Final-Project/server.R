@@ -20,9 +20,7 @@ sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength 
 shinyServer(function(input, output) {
   
   # --------------------------------------------Introduction-----------------------------------------------------------------
-  output$Intro <- renderText({  
-    intro <- readLines("bb-group2-Final-Project/Intro.html")
-  })
+  
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
   # Plotting code for graph 2 tab pie charts

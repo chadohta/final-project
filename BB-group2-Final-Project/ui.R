@@ -2,8 +2,8 @@ library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
                    
-                   tabPanel("Introduction", fluidPage(
-                     htmlOutput('Intro')
+                   tabPanel("Intro", fluidPage(
+                     includeMarkdown("Intro.Rmd")
                    )),
                     tabPanel("Background", fluidPage(
                       titlePanel("Statistics on the Data"),
@@ -21,7 +21,11 @@ shinyUI(navbarPage("Sleeping Alone",
                         )
                       ))
                     ),
-                   tabPanel("Graph"),
+                   tabPanel("Graph", fluidPage(
+                     titlePanel("Sleep Trends")
+                     
+                    )
+                   ),
                    tabPanel("Graph", fluidPage( #mine
                      titlePanel("Participant Opinions on Sleeping Separately"),
                      h5("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
