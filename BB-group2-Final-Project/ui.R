@@ -43,16 +43,18 @@ shinyUI(navbarPage("Sleeping Alone",
 
                    tabPanel("Graph", fluidPage(
                      titlePanel("Participant Opinions on Sleeping Separately"),
+                     sidebarPanel(
+                       selectInput('graph2Input', "Topic:",
+                                   list("Helping Relationships" = "SepHelpsUsStayTogether",
+                                        "Better Sleep" = "SepHelpsMeSleepBetter",
+                                        "Better Sex" = "SepImprovesSexLife"))
+                     ),
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
-                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\"")
-                  ), fluidRow(
-                    # pie charts
-                    column(width = 4, plotOutput('stayTogetherPie')),
-                    column(width = 4, plotOutput('betterSleepPie')),
-                    column(width = 4, plotOutput('improvedSexPie'))
+                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
+                     plotOutput('graph2Pie')
                   )),
 # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
 

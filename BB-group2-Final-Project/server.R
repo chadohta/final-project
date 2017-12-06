@@ -4,6 +4,7 @@ library(ggplot2)
 library(stringr)
 library(tidyr)
 library(scales)
+library(RColorBrewer)
 
 # Read in the file and change column names
 sleeping.data <- read.csv(file = "sleeping.data.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
@@ -94,40 +95,36 @@ shinyServer(function(input, output) {
   })
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
-  # Plotting code for graph 2 tab pie charts
-  pieLabels <- c("Strongly disagree", "Somewhat disagree", "Neighter agree nor disagree", "Somewhat agree", "Strongly agree")
+  sleeping.data$SepHelpsUsStayTogether <- factor(sleeping.data$SepHelpsUsStayTogether,
+         levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
+  sleeping.data$SepHelpsMeSleepBetter <- factor(sleeping.data$SepHelpsMeSleepBetter,
+         levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
+  sleeping.data$SepImprovesSexLife <- factor(sleeping.data$SepImprovesSexLife,
+         levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
 
-  stayTogetherSlices <- c(nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Strongly disagree")),
-                          nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Somewhat disagree")),
-                          nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Neither agree nor disagree")),
-                          nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Somewhat agree")),
-                          nrow(filter(sleeping.data, SepHelpsUsStayTogether == "Strongly agree")))
-  stayTogetherPct <- round(stayTogetherSlices/sum(stayTogetherSlices)*100)
-  stayTogetherLabels <- paste0(pieLabels, " ", stayTogetherPct, "%")
-  output$stayTogetherPie <- renderPlot({
-    pie(stayTogetherSlices, labels = stayTogetherLabels, main = "\"Sleeping in separate beds helps us to stay together.\"")
-  })
-
-  betterSleepSlices <- c(nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly disagree")),
-                         nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Somewhat disagree")),
-                         nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Neither agree nor disagree")),
-                         nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Somewhat agree")),
-                         nrow(filter(sleeping.data, SepHelpsMeSleepBetter == "Strongly agree")))
-  betterSleepPct <- round(betterSleepSlices/sum(betterSleepSlices)*100)
-  betterSleepLabels <- paste0(pieLabels, " ", betterSleepPct, "%")
-  output$betterSleepPie <- renderPlot({
-    pie(betterSleepSlices, labels = betterSleepLabels, main = "\"We sleep better when we sleep in separate beds.\"")
-  })
-
-  improvedSexSlices <- c(nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly disagree")),
-                         nrow(filter(sleeping.data, SepImprovesSexLife == "Somewhat disagree")),
-                         nrow(filter(sleeping.data, SepImprovesSexLife == "Neither agree nor disagree")),
-                         nrow(filter(sleeping.data, SepImprovesSexLife == "Somewhat agree")),
-                         nrow(filter(sleeping.data, SepImprovesSexLife == "Strongly agree")))
-  improvedSexPct <- round(improvedSexSlices/sum(improvedSexSlices)*100)
-  improvedSexLabels <- paste0(pieLabels, " ", improvedSexPct, "%")
-  output$improvedSexPie <- renderPlot({
-    pie(improvedSexSlices, labels = improvedSexLabels, main = "\"Our sex life has improved as a result of sleeping in separate beds.\"")
+  output$graph2Pie <- renderPlot({
+    if (input$graph2Input == "SepHelpsUsStayTogether") {
+      pieChartTitle <- "\"Sleeping in separate beds helps us to stay together.\""
+    } else if (input$graph2Input == "SepHelpsMeSleepBetter") {
+      pieChartTitle <- "\"We sleep better when we sleep in separate beds.\""
+    } else if (input$graph2Input == "SepImprovesSexLife") {
+      pieChartTitle <- "\"Our sex life has improved as a result of sleeping in separate beds.\""
+    }
+    ggplot(
+      data = filter(sleeping.data, eval(as.name(input$graph2Input)) != ""),
+      aes_string(x = factor(input$graph2Input), fill = input$graph2Input)) +
+      geom_bar(width = 1) +
+      ggtitle(pieChartTitle) + 
+      coord_polar("y") + 
+      scale_fill_brewer(palette="Blues") +
+      theme_minimal() + 
+      theme(
+        axis.title = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        axis.ticks = element_blank(),
+        legend.title = element_blank(),
+        axis.text = element_blank())
   })
 
   # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
