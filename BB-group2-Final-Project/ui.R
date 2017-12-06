@@ -32,8 +32,11 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
 
                    tabPanel("Graph", fluidPage(
-                     titlePanel("Sleep Trends")
-
+                     titlePanel("Sleep Trends"),
+                     p("Partipants were asked to choose the reasons they would sleep alone. These are the results:"),
+                     mainPanel(
+                       plotOutput("graph1Bar")
+                     )
                     )
                    ),
 # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
