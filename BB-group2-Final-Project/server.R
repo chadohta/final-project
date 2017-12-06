@@ -17,9 +17,6 @@ sleeping.data <- sleeping.data[-(1), ] # Remove header row with ("Response")
 
 shinyServer(function(input, output) {
 
-  # --------------------------------------------Introduction-----------------------------------------------------------------
-
-
   # --------------------------------------------Background Information-------------------------------------------------------
   # DataFrame alterations for Background Graph
   sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
@@ -95,14 +92,19 @@ shinyServer(function(input, output) {
   })
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
+  
+  # adjusting order that variables show up in the ggplot legend
   sleeping.data$SepHelpsUsStayTogether <- factor(sleeping.data$SepHelpsUsStayTogether,
          levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
   sleeping.data$SepHelpsMeSleepBetter <- factor(sleeping.data$SepHelpsMeSleepBetter,
          levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
   sleeping.data$SepImprovesSexLife <- factor(sleeping.data$SepImprovesSexLife,
          levels = c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree"))
-
+  
+  # rendering pie chart
   output$graph2Pie <- renderPlot({
+    
+    # pie chart title
     if (input$graph2Input == "SepHelpsUsStayTogether") {
       pieChartTitle <- "\"Sleeping in separate beds helps us to stay together.\""
     } else if (input$graph2Input == "SepHelpsMeSleepBetter") {
@@ -110,21 +112,17 @@ shinyServer(function(input, output) {
     } else if (input$graph2Input == "SepImprovesSexLife") {
       pieChartTitle <- "\"Our sex life has improved as a result of sleeping in separate beds.\""
     }
+    
+    # pie chart
     ggplot(
       data = filter(sleeping.data, eval(as.name(input$graph2Input)) != ""),
       aes_string(x = factor(input$graph2Input), fill = input$graph2Input)) +
       geom_bar(width = 1) +
       ggtitle(pieChartTitle) + 
+      guides(fill = guide_legend(title = "Participant Answer")) +
       coord_polar("y") + 
       scale_fill_brewer(palette="Blues") +
-      theme_minimal() + 
-      theme(
-        axis.title = element_blank(),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        axis.ticks = element_blank(),
-        legend.title = element_blank(),
-        axis.text = element_blank())
+      theme_void()
   })
 
   # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
@@ -156,7 +154,4 @@ shinyServer(function(input, output) {
       theme(panel.background = element_rect(fill = 'grey')) +
       scale_fill_manual(values=c("#FF8C94", "#FFAAA6", "#FFD3B5", "#DCEDC2", "#A8E6CE", "#C4FAF8", "#ACE7FF"))
   })
-
-  # --------------------------------------------Conclusion-----------------------------------------------------------------
-
 })

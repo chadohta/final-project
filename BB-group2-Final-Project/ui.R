@@ -31,7 +31,7 @@ shinyUI(navbarPage("Sleeping Alone",
                     ),
 # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
 
-                   tabPanel("Graph", fluidPage(
+                   tabPanel("Sleep Trends", fluidPage(
                      titlePanel("Sleep Trends"),
                      p("Partipants were asked to choose the reasons they would sleep alone. These are the results:"),
                      mainPanel(
@@ -41,19 +41,25 @@ shinyUI(navbarPage("Sleeping Alone",
                    ),
 # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
 
-                   tabPanel("Graph", fluidPage(
+                   tabPanel("Opinions on Sleeping Separately", fluidPage(
                      titlePanel("Participant Opinions on Sleeping Separately"),
+                     
+                     # allows users to choose what topic they would like to see in pie chart form
                      sidebarPanel(
                        selectInput('graph2Input', "Topic:",
                                    list("Helping Relationships" = "SepHelpsUsStayTogether",
                                         "Better Sleep" = "SepHelpsMeSleepBetter",
                                         "Better Sex" = "SepImprovesSexLife"))
                      ),
+                     
+                     # explanation to users
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
                      p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
+                     
+                     # displays the pie chart
                      plotOutput('graph2Pie')
                   )),
 # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
@@ -79,6 +85,6 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Conclusion-----------------------------------------------------------------
 
                    tabPanel("Conclusion", fluidPage(
-                     #conclusion statements here
+                     includeMarkdown("Conclusion.Rmd")
                    ))
 ))
