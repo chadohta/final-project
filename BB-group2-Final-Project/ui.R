@@ -1,6 +1,6 @@
 library(shiny)
 
-shinyUI(navbarPage("Sleeping Alone"
+shinyUI(navbarPage("Sleeping Alone",
                    tabPanel("Intro", fluidPage(
                               htmlOutput('Intro')
                             )
@@ -30,6 +30,7 @@ shinyUI(navbarPage("Sleeping Alone"
                     ),
                    tabPanel("Graph"),
                    tabPanel("Graph", fluidPage( #mine
+                     titlePanel("Participant Opinions on Sleeping Separately"),
                      h5("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
