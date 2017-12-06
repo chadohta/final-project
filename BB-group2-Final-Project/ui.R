@@ -44,12 +44,10 @@ shinyUI(navbarPage("Sleeping Alone",
                        following statements:"),
                      p("- \"Sleeping in separate beds helps us to stay together.\""),
                      p("- \"We sleep better when we sleep in separate beds.\""),
-                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\"")
-                  ), fluidRow(
-                    # pie charts
-                    column(width = 4, plotOutput('stayTogetherPie')),
-                    column(width = 4, plotOutput('betterSleepPie')),
-                    column(width = 4, plotOutput('improvedSexPie'))
+                     p("- \"Our sex life has improved as a result of sleeping in separate beds.\""),
+                     plotOutput('stayTogetherPie'),
+                     plotOutput('betterSleepPie'),
+                     plotOutput('improvedSexPie')
                   )),
 # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
 
