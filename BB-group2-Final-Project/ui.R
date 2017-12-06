@@ -1,14 +1,7 @@
 library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
-                   tabPanel("Intro", fluidPage(
-                              htmlOutput('Intro')
-                            )
-                   ),
-                   tabPanel("Background",
-                            titlePanel("Background Information"),
-                            mainPanel()
-                   ),
+                   
                    tabPanel("Intro", fluidPage(
                      htmlOutput('Intro')
                    )),
