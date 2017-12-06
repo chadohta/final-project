@@ -9,16 +9,16 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Background Information-------------------------------------------------------
 
                     tabPanel("Background", fluidPage(
-                      titlePanel("Statistics on the Data"),
+                      titlePanel("Data Statistics"),
                       sidebarLayout(
                         sidebarPanel(
                           # dataVariable Widget
-                          selectInput('dataVariable', "Variable:",
+                          selectInput('dataVariable', "Histogram Variable:",
                                       list("Years Together" = "CurrentRelationshipLength",
                                            "Education" = "Education",
                                            "Income" = "HouseholdIncome")),
                           # Age or Gender Widget
-                          selectInput('ageOrGender', "Variable:",                   #we can change these variable names!
+                          selectInput('ageOrGender', "Pie Chart Variable:",
                                       list("Gender" = "Gender",
                                            "Age" = "Age"))
                           ),
@@ -32,8 +32,11 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
 
                    tabPanel("Graph", fluidPage(
-                     titlePanel("Sleep Trends")
-
+                     titlePanel("Sleep Trends"),
+                     p("Partipants were asked to choose the reasons they would sleep alone. These are the results:"),
+                     mainPanel(
+                       plotOutput("graph1Bar")
+                     )
                     )
                    ),
 # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
@@ -52,19 +55,17 @@ shinyUI(navbarPage("Sleeping Alone",
 # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
 
                   tabPanel("Pattern Analyzation" , fluidPage(
-                    titlePanel("How Different Variables Affect Frequency of Sleeping Alone"),
+                    titlePanel("How Different Variables Potentially Affect Frequency of Sleeping Alone"),
                       sidebarLayout(
                         sidebarPanel(
-                          # Color Widget
-                          radioButtons('color', "Color by:",
-                                      c("Education" = "",
-                                        "Gender" = "",
-                                        "Marital Status" = "")),
                           # Variable Widget
-                          selectInput('variable', "Variable:",
-                                     list("Income" = "",
-                                          "Age" = "",
-                                          "Time Together" = ""))
+                          selectInput('analyticsVariable', "Variable:",
+                                     list("Income" = "HouseholdIncome",
+                                          "Age" = "Age",
+                                          "Education" = "Education",
+                                          "Gender" = "Gender",
+                                          "Relationship Status" = "RelationshipStatus",
+                                          "Time Together" = "CurrentRelationshipLength"))
                           ),
                         # Main Panel, Render the Graph
                         mainPanel(
