@@ -3,9 +3,10 @@ library(dplyr)
 library(ggplot2)
 library(stringr) 
 library(tidyr)
+library(scales)
 
 # Read in the file and change column names
-sleeping.data <- read.csv(file = "sleeping.data.csv", header = TRUE, sep = ",")
+sleeping.data <- read.csv(file = "sleeping.data.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 colnames(sleeping.data) <- c("StartDate", "EndDate", "RelationshipStatus", "CurrentRelationshipLength", "HowOftenSleepingSeparate", 
                              "WhereDoYouSleep", "Other1", "WherePartnerSleeps", "Other2", "Reasons", "R1", "R2", "R3", "R4", "R5",
                              "R6", "R7", "R8", "R9", "R10", "FirstTimeSleepingSep", "SepHelpsUsStayTogether", "SepHelpsMeSleepBetter",
@@ -24,6 +25,20 @@ shinyServer(function(input, output) {
   # DataFrame alterations for Background Graph
   sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
   sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
+  sleeping.data$Education[sleeping.data$Education == ""] <- 'No Response'
+  sleeping.data$HouseholdIncome[sleeping.data$HouseholdIncome == ""] <- 'No Reponse'
+  
+  sleeping.data$Education <- factor(sleeping.data$Education, levels = c("Less than high school degree", 
+                                                                        "High school degree", "Some college or Associate degree", 
+                                                                        "Bachelor degree", 
+                                                                        "Graduate degree", 
+                                                                        "No Response"))
+  sleeping.data$HouseholdIncome <- factor(sleeping.data$HouseholdIncome, levels = c("$0 - $24,999", 
+                                                                                    "$25,000 - $49,999", 
+                                                                                    "$50,000 - $99,999", 
+                                                                                    "$100,000 - $149,999",
+                                                                                    "$150,000+",
+                                                                                    "No Response"))
   
   # Plotting code for background information graph
   output$backgroundGraph <- renderPlot({
@@ -32,9 +47,35 @@ shinyServer(function(input, output) {
   })
   
   # Plotting code for background information pie chart
+  
+  # DataFrome alterations for Background Pie Chart
+  sleeping.data$Gender[sleeping.data$Gender == ""] <- 'No Response'
+  sleeping.data$Age[sleeping.data$Age == ""] <- 'No Response'
+  sleeping.data$Gender <- factor(sleeping.data$Gender, levels = c("No Response",
+                                                                  "Female",
+                                                                  "Male"))
+  sleeping.data$Age <- factor(sleeping.data$Age, levels = c("No Response",
+                                                            "18-29",
+                                                            "30-44",
+                                                            "45-60",
+                                                            "> 60"))
+  
+  # Create a blank theme for piechart
+  blank_theme <- theme_minimal() + theme(
+      plot.title = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.border = element_blank(),
+      panel.grid = element_blank(),
+      axis.ticks = element_blank()
+    )
+  
   output$backgroundPie <- renderPlot({
-    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$ageOrGender, fill = input$ageOrGender))+
-      coord_polar("y") + ggtitle("Test Pie")
+    ggplot(data = sleeping.data, aes_string(x = factor(input$ageOrGender), fill = input$ageOrGender)) +
+      geom_bar(width = 1) +
+      coord_polar("y") + ggtitle("Test Pie") + 
+      blank_theme +
+      scale_fill_manual(values=c("#CCCCCC", "#FF9999", "#33CCFF", "#3399CC", "#33CCCC"))
   })
   
   

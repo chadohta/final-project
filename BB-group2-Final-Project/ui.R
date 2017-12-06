@@ -20,7 +20,8 @@ shinyUI(navbarPage("Sleeping Alone",
                           ),
                         # Main Panel
                         mainPanel(
-                          plotOutput("backgroundGraph")
+                          plotOutput("backgroundGraph"),
+                          plotOutput("backgroundPie")
                         )
                       ))
                     ),
