@@ -24,8 +24,9 @@ shinyServer(function(input, output) {
   sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
   sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
   sleeping.data$Education[sleeping.data$Education == ""] <- 'No Response'
-  sleeping.data$HouseholdIncome[sleeping.data$HouseholdIncome == ""] <- 'No Reponse'
+  sleeping.data$HouseholdIncome[sleeping.data$HouseholdIncome == ""] <- 'No Response'
   
+  # Reordering the levels (order) of the Education and Household Income columns
   sleeping.data$Education <- factor(sleeping.data$Education, levels = c("Less than high school degree", 
                                                                         "High school degree", "Some college or Associate degree", 
                                                                         "Bachelor degree", 
@@ -41,14 +42,16 @@ shinyServer(function(input, output) {
   # Plotting code for background information graph
   output$backgroundGraph <- renderPlot({
     ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$dataVariable, fill = input$dataVariable)) +
-      ggtitle("Testing") + labs(x = "Variable", y = "Count") + coord_flip()
+      ggtitle("Background Information") + labs(x = "Variable", y = "Count") + coord_flip() + 
+      theme(panel.background = element_rect(fill = 'grey')) +
+      scale_fill_manual(values=c("#FF8C94", "#FFAAA6", "#FFD3B5", "#DCEDC2", "#A8E6CE", "#C4FAF8", "#ACE7FF"))
   })
-  
-  # Plotting code for background information pie chart
   
   # DataFrome alterations for Background Pie Chart
   sleeping.data$Gender[sleeping.data$Gender == ""] <- 'No Response'
   sleeping.data$Age[sleeping.data$Age == ""] <- 'No Response'
+  
+  # Reordering the levels (order) of the Gender and Age columns
   sleeping.data$Gender <- factor(sleeping.data$Gender, levels = c("No Response",
                                                                   "Female",
                                                                   "Male"))
@@ -68,14 +71,20 @@ shinyServer(function(input, output) {
       axis.ticks = element_blank()
     )
   
+  # Plotting code for background information pie chart
   output$backgroundPie <- renderPlot({
     ggplot(data = sleeping.data, aes_string(x = factor(input$ageOrGender), fill = input$ageOrGender)) +
       geom_bar(width = 1) +
-      coord_polar("y") + ggtitle("Test Pie") + 
+      coord_polar("y") + 
       blank_theme +
       scale_fill_manual(values=c("#CCCCCC", "#FF9999", "#33CCFF", "#3399CC", "#33CCCC"))
   })
   # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
+  
+  sleeping.data.stacked <- select(sleeping.data, Reasons, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
+  sleeping.data.stacked <- stack(sleeping.data.stacked)
+  sleeping.data.stacked <- select(sleeping.data.stacked, values)
+  sleeping.data.stacked <- filter(sleeping.data.stacked, values != "")
   
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
@@ -116,6 +125,34 @@ shinyServer(function(input, output) {
   })
   
   # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
+  
+  # Data Frame alterations for Pattern Analyzation graph
+  sleeping.data$HowOftenSleepingSeparate[sleeping.data$HowOftenSleepingSeparate == ""] <- 'No Response'
+  
+  # Reordering the levels (order) of the HowOftenSleepingSeparate and RelationshipStatus columns
+  sleeping.data$HowOftenSleepingSeparate <- factor(sleeping.data$HowOftenSleepingSeparate, 
+                                                   levels = c("Every night",
+                                                              "A few times per week",
+                                                              "A few times per month",
+                                                              "Once a month or less",
+                                                              "Once a year or less",
+                                                              "Never",
+                                                              "No Response"))
+  sleeping.data$RelationshipStatus <- factor(sleeping.data$RelationshipStatus, 
+                                                   levels = c("Single, but cohabiting with a significant other",
+                                                              "In a domestic partnership or civil union",
+                                                              "Married",
+                                                              "Separated",
+                                                              "Divorced",
+                                                              "Widowed"))
+                                                     
+  # Plotting code for Pattern Analyzation bar graph
+  output$analyticsGraph <- renderPlot({
+    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$analyticsVariable, fill = "HowOftenSleepingSeparate")) +
+      ggtitle("") + labs(x = "Variable", y = "Count") + coord_flip() +
+      theme(panel.background = element_rect(fill = 'grey')) +
+      scale_fill_manual(values=c("#FF8C94", "#FFAAA6", "#FFD3B5", "#DCEDC2", "#A8E6CE", "#C4FAF8", "#ACE7FF"))
+  })
   
   # --------------------------------------------Conclusion-----------------------------------------------------------------
   
