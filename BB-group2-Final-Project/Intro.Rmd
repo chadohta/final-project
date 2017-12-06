@@ -13,7 +13,9 @@ This app deals with a data set that talks about people sleeping alone vs. sleepi
 ## Questions
 Some questions we asked about this data was :
 
-* What kind of person is most susceptible to sleeping alone?
-* Does sleeping with your spouse/significant other deepen your relationship?
-* Does gender tend to affect preferences or sleep conditions? (who ends up on the couch?)
 * What are some of the reasons partners end up sleeping separately?
+* Does sleeping with your spouse/significant other deepen your relationship?
+* What kind of person is most susceptible to sleeping alone?
+
+## Target Audience
+This data pertains mostly to people who are either in a relationship, or are starting a new relationship. The information deals with couples, and other couples can learn the effects or trends that sleeping together or alone has whether they be positive, negative, or not really have a strong effect on most people.
