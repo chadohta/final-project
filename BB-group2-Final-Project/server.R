@@ -3,6 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(stringr) 
 library(tidyr)
+library(reshape2)
 
 # Read in the file and change column names
 sleeping.data <- read.csv(file = "sleeping.data.csv", header = TRUE, sep = ",")
@@ -35,6 +36,22 @@ shinyServer(function(input, output) {
       coord_polar("y") + ggtitle("Test Pie")
   })
   # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
+  reasonsAlone <- select(sleeping.data, Reasons, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
+  
+  
+  reasons <- c("One of us makes frequent bathroom trips in the night",
+                              "One of us is sick",
+                              "We are no longer physically intimate",
+                              "We have different temperature preferences for the room",
+                              "We've had an argument or fight",
+                              "Not enough space",
+                              "Do not want to share the covers",
+                              "One of us needs to sleep with a child",
+                              "Night working/very different sleeping times",
+                              "Other")
+  
+  ggplot(reasonsAlone) + geom_bar(aes(x= colnames(reasonsAlone))) + coord_flip()
+  #barplot(barNums, names.arg = colnames(reasonsAlone), horiz = TRUE)
   
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
