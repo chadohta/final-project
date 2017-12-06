@@ -2,8 +2,8 @@ library(shiny)
 
 shinyUI(navbarPage("Sleeping Alone",
                    
-                   tabPanel("Introduction", fluidPage(
-                     htmlOutput('Intro')
+                   tabPanel("Intro", fluidPage(
+                     includeMarkdown("Intro.Rmd")
                    )),
                     tabPanel("Background", fluidPage(
                       titlePanel("Statistics on the Data"),
@@ -13,7 +13,11 @@ shinyUI(navbarPage("Sleeping Alone",
                           selectInput('dataVariable', "Variable:",
                                       list("Years Together" = "CurrentRelationshipLength",
                                            "Education" = "Education",
-                                           "Income" = "HouseholdIncome"))
+                                           "Income" = "HouseholdIncome")),
+                          # Age or Gender Widget
+                          selectInput('ageOrGender', "Variable:",                   #we can change these variable names!
+                                      list("Gender" = "Gender",
+                                           "Age" = "Age"))
                           ),
                         # Main Panel
                         mainPanel(
@@ -21,7 +25,11 @@ shinyUI(navbarPage("Sleeping Alone",
                         )
                       ))
                     ),
-                   tabPanel("Graph"),
+                   tabPanel("Graph", fluidPage(
+                     titlePanel("Sleep Trends")
+
+                    )
+                   ),
                    tabPanel("Graph", fluidPage( #mine
                      titlePanel("Participant Opinions on Sleeping Separately"),
                      p("Participants were asked to choose from a range of \"Strongly Agree\" to \"Strongly Disagree\" to the

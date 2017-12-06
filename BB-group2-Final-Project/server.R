@@ -10,19 +10,31 @@ colnames(sleeping.data) <- c("StartDate", "EndDate", "RelationshipStatus", "Curr
                              "WhereDoYouSleep", "Other1", "WherePartnerSleeps", "Other2", "Reasons", "R1", "R2", "R3", "R4", "R5",
                              "R6", "R7", "R8", "R9", "R10", "FirstTimeSleepingSep", "SepHelpsUsStayTogether", "SepHelpsMeSleepBetter",
                              "SepImprovesSexLife", "Occupation", "O1", "Gender", "Age", "HouseholdIncome", "Education", "Location")
-
 sleeping.data <- sleeping.data[-(1), ] # Remove header row with ("Response")
-
-sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
-sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
 
 
 shinyServer(function(input, output) {
   
   # --------------------------------------------Introduction-----------------------------------------------------------------
-  output$Intro <- renderText({  
-    intro <- readLines("bb-group2-Final-Project/Intro.html")
+  
+  
+  # --------------------------------------------Background Information-------------------------------------------------------
+  # DataFrame alterations for Background Graph
+  sleeping.data$CurrentRelationshipLength <- str_replace_all(sleeping.data$CurrentRelationshipLength, "Less than 1 year", "0-1 year")
+  sleeping.data$CurrentRelationshipLength[sleeping.data$CurrentRelationshipLength == ""] <- 'No Response'
+  
+  # Plotting code for background information graph
+  output$backgroundGraph <- renderPlot({
+    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$dataVariable, fill = input$dataVariable)) +
+      ggtitle("Testing") + labs(x = "Variable", y = "Count") + coord_flip()
   })
+  
+  # Plotting code for background information pie chart
+  output$backgroundPie <- renderPlot({
+    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$ageOrGender, fill = input$ageOrGender))+
+      coord_polar("y") + ggtitle("Test Pie")
+  })
+  
   
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
   # Plotting code for graph 2 tab pie charts
@@ -62,10 +74,5 @@ shinyServer(function(input, output) {
   })
   
   # --------------------------------------------Pattern Analyzation-----------------------------------------------------------------
-  # Plotting code for background information graph
-  output$backgroundGraph <- renderPlot({
-    ggplot(data = sleeping.data) + geom_bar(mapping = aes_string(x = input$dataVariable, fill = input$dataVariable)) +
-      ggtitle("Testing") + labs(x = "Variable", y = "Count") + coord_flip()
-  })
   
 })
