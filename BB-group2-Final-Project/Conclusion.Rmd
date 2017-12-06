@@ -7,6 +7,10 @@ output: html_document
 
 # Conclusion
 
+## Participant Demographics
+
+The participants that were observed to create the dataset we are using features varying levels of education, as well as a fairly even split between males and females. A significant amount of the participants have been in their most recent relationship for more than 20 years. Of those that provided their income information, most participants have a household income within the range of $50,000 - $149,000. A majority of participants were 45 years or older.
+
 ## Observations
 
 Based on the data that has been displayed in this app, we can observe that:
@@ -14,6 +18,10 @@ Based on the data that has been displayed in this app, we can observe that:
 * A couple of the most common reasons why couples choose to sleep separately would be that one person is sick, or one person snores.
 * There are more participants that disagreed that sleeping separately helps couples stay together rather than agreed.
 * When asked if participants slept better when sleeping separately, results were distributed fairly evenly amongst all choices within the range of "Strongly agree" and "Strongly disagree".
-* A significant amount of participants "Strongly disagree" that sleeping separately does _not_ improve their sex life.
+* A significant amount of participants "Strongly disagree" that sleeping separately does **not** improve their sex life.
 * The percentage of couples that sleep separately every night appears to increase as the age of the couple increases.
 * The percentage of couples that sleep separately every night appears to be higher for couples that have been together for more than 20 years.
+
+## Concluding Remarks
+
+Thank you for visiting our app!
