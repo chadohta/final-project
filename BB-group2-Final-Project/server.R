@@ -80,28 +80,20 @@ shinyServer(function(input, output) {
       scale_fill_manual(values=c("#CCCCCC", "#FF9999", "#33CCFF", "#3399CC", "#33CCCC"))
   })
   # --------------------------------------------Graph Tab 1-----------------------------------------------------------------
-  reasonsAlone <- select(sleeping.data, Reasons, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
-
-
-  reasons <- c("One of us makes frequent bathroom trips in the night",
-                              "One of us is sick",
-                              "We are no longer physically intimate",
-                              "We have different temperature preferences for the room",
-                              "We've had an argument or fight",
-                              "Not enough space",
-                              "Do not want to share the covers",
-                              "One of us needs to sleep with a child",
-                              "Night working/very different sleeping times",
-                              "Other")
-
-  ggplot(reasonsAlone) + geom_bar(aes(x= colnames(reasonsAlone))) + coord_flip()
-  #barplot(barNums, names.arg = colnames(reasonsAlone), horiz = TRUE)
+ 
+  
 
   sleeping.data.stacked <- select(sleeping.data, Reasons, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
   sleeping.data.stacked <- stack(sleeping.data.stacked)
   sleeping.data.stacked <- select(sleeping.data.stacked, values)
   sleeping.data.stacked <- filter(sleeping.data.stacked, values != "")
+  sleeping.data.stacked$values[sleeping.data.stacked$values == "Other (please specify)"] <- 'Other'
+  output$graph1Bar <- renderPlot({
+    ggplot(sleeping.data.stacked) + geom_bar(aes(x = values, fill= values,)) + coord_flip() + guides(fill=FALSE) +
+      scale_fill_manual(values=c("#FF8C94", "#FFAAA6", "#FFD3B5", "#DCEDC2", "#A8E6CE", "#C4FAF8", "#ACE7FF", "#85E3FF",
+                                 "#6EB5FF", "#DCD3FF", "#B5B9FF"))
 
+  })
 
   # --------------------------------------------Graph Tab 2-----------------------------------------------------------------
   # Plotting code for graph 2 tab pie charts
